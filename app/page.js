@@ -1,101 +1,152 @@
-import Image from "next/image";
+"use client"
+import Link from 'next/link';
+import { useState, useEffect } from 'react';
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.js
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+    useEffect(() => {
+        const token = localStorage.getItem('authToken');
+        if (token) {
+            setIsLoggedIn(true);
+        }
+    }, []);
+
+    const handleButtonClick = (e) => {
+        if (!isLoggedIn) {
+            e.preventDefault(); // Prevents the default link behavior
+            window.location.href = "/auth/login"; // Redirects to the login page
+        }
+    };
+
+    return (
+        <div className="min-h-screen h-full w-full px-1 py-1 bg-black">
+            <div className="container mx-auto px-6 py-15 ">
+                <header className="text-center mb-10">
+                    <h1 className="text-4xl font-extrabold mb-4">
+                        ExploreHub
+                    </h1>
+                    <p className="text-lg mb-8">
+                        A centralized dashboard that brings together the wonders of space, Earth, and planetary exploration.
+                    </p>
+                </header>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                    {/* Astronomy Picture of the Day */}
+                    <div className="bg-gradient-to-r from-gray-900 via-slate-950 to-black p-6 rounded-lg shadow-2xl transform hover:scale-105 hover:shadow-pink-900 transition-all duration-300 ease-in-out">
+                        <h2 className="text-2xl font-extrabold text-white mb-4">Astronomy Picture of the Day</h2>
+                        <p className="text-gray-400 mb-4">Discover the stunning beauty of space with daily images and descriptions from NASA.</p>
+                        <Link href="/modules/apod">
+                            <button 
+                                className="inline-block py-2 px-4 bg-slate-700 text-white rounded-md shadow-lg hover:shadow-2xl transition duration-300 ease-in-out hover:bg-purple-950"
+                                onClick={handleButtonClick}
+                            >
+                                Explore APOD
+                            </button>
+                        </Link>
+                    </div>
+
+                    {/* Asteroids NeoWs */}
+                    <div className="bg-gradient-to-r from-gray-900 via-slate-950 to-black p-6 rounded-lg shadow-lg transform hover:scale-105 hover:shadow-pink-900 transition-all duration-300 ease-in-out">
+                        <h2 className="text-2xl font-extrabold text-white mb-4">Asteroids NeoWs</h2>
+                        <p className="text-gray-400 mb-4">Track near-Earth objects (NEOs) and their trajectories. Stay informed about potential asteroid risks!</p>
+                        <Link href="/modules/neows">
+                            <button 
+                                className="inline-block py-2 px-4 bg-green-600 text-white rounded-md shadow-lg hover:shadow-2xl transition duration-300 ease-in-out hover:bg-green-700 mt-8"
+                                onClick={handleButtonClick}
+                            >
+                                Explore Asteroids
+                            </button>
+                        </Link>
+                    </div>
+
+                    {/* EARTH */}
+                    <div className="bg-gradient-to-r from-gray-900 via-slate-950 to-black p-6 rounded-lg shadow-2xl transform hover:scale-105 hover:shadow-pink-900 transition-all duration-300 ease-in-out">
+                        <h2 className="text-2xl font-extrabold text-white mb-4">NASA Earth Imagery</h2>
+                        <p className="text-gray-400 mb-4">Get images of any part of earth by entering the longitude, latitude, and time.</p>
+                        <Link href="/modules/earth">
+                            <button 
+                                className="inline-block py-2 px-4 bg-red-600 text-white rounded-md shadow-lg hover:shadow-2xl transition duration-300 ease-in-out hover:bg-red-700 mt-8"
+                                onClick={handleButtonClick}
+                            >
+                                Explore Earth
+                            </button>
+                        </Link>
+                    </div>
+
+                    {/* EONET (Natural Events) */}
+                    <div className="bg-gradient-to-r from-gray-900 via-slate-950 to-black p-6 rounded-lg shadow-2xl transform hover:scale-105 hover:shadow-pink-900 transition-all duration-300 ease-in-out">
+                        <h2 className="text-2xl font-extrabold text-white mb-4">Earth Natural Events</h2>
+                        <p className="text-gray-400 mb-4">Visualize natural events like wildfires, volcanic eruptions, and storms occurring on Earth.</p>
+                        <Link href="/modules/eonet">
+                            <button 
+                                className="inline-block py-2 px-4 bg-yellow-600 text-white rounded-md shadow-lg hover:shadow-2xl transition duration-300 ease-in-out hover:bg-yellow-700 mt-6"
+                                onClick={handleButtonClick}
+                            >
+                                Explore Natural Events
+                            </button>
+                        </Link>
+                    </div>
+
+                    {/* EPIC (Earth Imaging) */}
+                    <div className="bg-gradient-to-r from-gray-900 via-slate-950 to-black p-6 rounded-lg shadow-2xl transform hover:scale-105 hover:shadow-pink-900 transition-all duration-300 ease-in-out">
+                        <h2 className="text-2xl font-extrabold text-white mb-4">Earth from Space</h2>
+                        <p className="text-gray-400 mb-4">View Earth from space with daily images captured by the DSCOVR satellite.</p>
+                        <Link href="/modules/epic">
+                            <button 
+                                className="inline-block py-2 px-4 bg-indigo-600 text-white rounded-md shadow-lg hover:shadow-2xl transition duration-300 ease-in-out hover:bg-indigo-700 mt-6"
+                                onClick={handleButtonClick}
+                            >
+                                Explore Earth Images
+                            </button>
+                        </Link>
+                    </div>
+
+                    {/* Mars Rover Photos */}
+                    <div className="bg-gradient-to-r from-gray-900 via-slate-950 to-black p-6 rounded-lg shadow-2xl transform hover:scale-105 hover:shadow-pink-900 transition-all duration-300 ease-in-out">
+                        <h2 className="text-2xl font-extrabold text-white mb-4">Mars Rover Photos</h2>
+                        <p className="text-gray-400 mb-4">Browse through the latest images from Mars rovers like Curiosity and Perseverance.</p>
+                        <Link href="/modules/MarsR">
+                            <button 
+                                className="inline-block py-2 px-4 bg-purple-600 text-white rounded-md shadow-lg hover:shadow-2xl transition duration-300 ease-in-out hover:bg-purple-700"
+                                onClick={handleButtonClick}
+                            >
+                                Explore Mars Photos
+                            </button>
+                        </Link>
+                    </div>
+
+                    {/* InSight (Mars Weather) */}
+                    <div className="bg-gradient-to-r from-gray-900 via-slate-950 to-black p-6 rounded-lg shadow-2xl transform hover:scale-105 hover:shadow-pink-900 transition-all duration-300 ease-in-out">
+                        <h2 className="text-2xl font-extrabold text-white mb-4">Mars Weather</h2>
+                        <p className="text-gray-400 mb-4">Track the weather conditions on Mars, including temperature, wind speed, and atmospheric pressure.</p>
+                        <Link href="/modules/MarsW">
+                            <button 
+                                className="inline-block py-2 px-4 bg-teal-600 text-white rounded-md shadow-lg hover:shadow-2xl transition duration-300 ease-in-out hover:bg-teal-700"
+                                onClick={handleButtonClick}
+                            >
+                                Explore Mars Weather
+                            </button>
+                        </Link>
+                    </div>
+
+                    {/* Exoplanet Exploration */}
+                    <div className="bg-gradient-to-r from-gray-900 via-slate-950 to-black p-6 rounded-lg shadow-2xl transform hover:scale-105 hover:shadow-pink-900 transition-all duration-300 ease-in-out">
+                        <h2 className="text-2xl font-extrabold text-white mb-4">Exoplanet Exploration</h2>
+                        <p className="text-gray-400 mb-4">Discover newly discovered exoplanets, their potential habitability, and more!</p>
+                        <Link href="/modules/exop">
+                            <button 
+                                className="inline-block py-2 px-4 bg-orange-600 text-white rounded-md shadow-lg hover:shadow-2xl transition duration-300 ease-in-out hover:bg-orange-700 mt-5"
+                                onClick={handleButtonClick}
+                            >
+                                Explore Exoplanets
+                            </button>
+                        </Link>
+                    </div>
+
+                </div>
+
+            </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
-  );
+    );
 }
