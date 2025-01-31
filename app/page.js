@@ -47,7 +47,7 @@ export default function Home() {
                     </div>
 
                     {/* Asteroids NeoWs */}
-                    <div className="bg-gradient-to-r from-gray-900 via-slate-950 to-black p-6 rounded-lg shadow-lg transform hover:scale-105 hover:shadow-pink-900 transition-all duration-300 ease-in-out">
+                    <div className="bg-gradient-to-r from-gray-900 via-slate-950 to-black p-6 rounded-lg shadow-2xl transform hover:scale-105 hover:shadow-pink-900 transition-all duration-300 ease-in-out">
                         <h2 className="text-2xl font-extrabold text-white mb-4">Asteroids NeoWs</h2>
                         <p className="text-gray-400 mb-4">Track near-Earth objects (NEOs) and their trajectories. Stay informed about potential asteroid risks!</p>
                         <Link href="/modules/neows">

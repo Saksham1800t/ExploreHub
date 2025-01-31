@@ -5,11 +5,11 @@ const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [message, setMessage] = useState("");
-    const [alertType, setAlertType] = useState(""); // "success" or "error"
+    const [alertType, setAlertType] = useState("");
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setMessage(""); // Clear previous messages
+        setMessage(""); 
 
         try {
             const res = await fetch("/api/auth/login", {
